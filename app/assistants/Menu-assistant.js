@@ -38,10 +38,10 @@ MenuAssistant.prototype.handleContinueButtonPress = function(event) {
 	var CookieInfo = new Mojo.Model.Cookie("Speller");
 	var levelInfo = CookieInfo.get();
 	
-	this.controller.stageController.pushScene("Game", levelInfo != null ? levelInfo.Level : 1, this.WordList, null, null, levelInfo != null ? levelInfo.Score : 0, 100);
+	this.controller.stageController.pushScene("Game", levelInfo != null ? levelInfo.Level : 1, this.WordList, null, null, levelInfo != null ? levelInfo.Score : 0, 100, levelInfo.PassedLevels);
 }
 MenuAssistant.prototype.handleButtonPress = function(event){
-	this.controller.stageController.pushScene("Game", 1, this.WordList, null, null, 0, 100);
+	this.controller.stageController.pushScene("Game", 1, this.WordList, null, null, 0, 100, null);
 }
 
 MenuAssistant.prototype.handlePrefButtonPress = function(event){

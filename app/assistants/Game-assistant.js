@@ -1,4 +1,4 @@
-function GameAssistant(level, wordList, randWordArray, choice, score, levelScore) {
+function GameAssistant(level, wordList, randWordArray, choice, score, levelScore, passedLevels, offset) {
 	this.Level = level;
 	this.WordList = wordList;
 	this.RandWordArray = randWordArray;
@@ -7,10 +7,12 @@ function GameAssistant(level, wordList, randWordArray, choice, score, levelScore
 	this.Choice = choice;
 	this.Score = score;
 	this.LevelScore = levelScore;
+	this.PassedLevels = passedLevels;
+	this.CurWordOffset = offset;
 }
 
 GameAssistant.prototype.setup = function() {
-	var levelWords = this.getLevelWords(this.Level);
+	var levelWords = this.getLevelWords();
 	
 	if (this.Level == 1) {
 		var CookieInfo = new Mojo.Model.Cookie("Speller");
@@ -49,7 +51,7 @@ GameAssistant.prototype.cleanup = function(event) {
 GameAssistant.prototype.handleRightButtonPress = function(event){
 	if (this.RandWordArray.length < 5) {
 		var choiceHeader = this.RandWordArray.length + " - Right!";
-		this.controller.stageController.swapScene("Game", this.Level, this.WordList, this.RandWordArray, choiceHeader, this.Score, this.LevelScore);
+		this.controller.stageController.swapScene("Game", this.Level, this.WordList, this.RandWordArray, choiceHeader, this.Score, this.LevelScore, this.PassedLevels, this.CurWordOffset);
 	}
 	else {
 		var startingPoint = 5 * (this.Level);
@@ -57,7 +59,7 @@ GameAssistant.prototype.handleRightButtonPress = function(event){
 			this.controller.stageController.swapScene("EndGame", this.Score + this.LevelScore);
 		}
 		else {
-			this.controller.stageController.swapScene("LevelRecap", this.Level + 1, this.WordList, this.Score + this.LevelScore);
+			this.controller.stageController.swapScene("LevelRecap", this.Level + 1, this.WordList, this.Score + this.LevelScore, this.PassedLevels);
 		}
 	}
 }
@@ -67,20 +69,19 @@ GameAssistant.prototype.handleWrongButtonPress = function(event){
 	if (this.LevelScore < 5) {
 		subScore = 0;
 	}
-	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, "Wrong!", this.Score, subScore);
+	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, "Wrong!", this.Score, subScore, this.PassedLevels, this.CurWordOffset);
 }
 
-GameAssistant.prototype.getLevelWords = function(level) {
-	var startingPoint = 5 * (level - 1);
-	//If there aren't enough words to generate the level, the game is over.
-	// TODO pass over statistics
-	if (this.WordList.AllWords.length - 1 < (startingPoint + 4)) {
-		this.controller.stageController.swapScene("EndGame", this.Score);
+GameAssistant.prototype.getLevelWords = function() {
+	var randLevel = null;
+	if (this.CurWordOffset == null) {
+		randLevel = this.getAndSetRandLevel(this.PassedLevels);
+	} else {
+		randLevel = this.CurWordOffset;
 	}
-	else {
-		//Return a 2D array that contains the words for the current level.
-		return [this.WordList.AllWords[startingPoint], this.WordList.AllWords[startingPoint + 1], this.WordList.AllWords[startingPoint + 2], this.WordList.AllWords[startingPoint + 3], this.WordList.AllWords[startingPoint + 4]];
-	}
+	var startingPoint = 5 * (randLevel - 1);
+	//Return a 2D array that contains the words for the current level.
+	return [this.WordList.AllWords[startingPoint], this.WordList.AllWords[startingPoint + 1], this.WordList.AllWords[startingPoint + 2], this.WordList.AllWords[startingPoint + 3], this.WordList.AllWords[startingPoint + 4]];
 }
 
 GameAssistant.prototype.getAndSetRandWord = function(oldRandArray) {
@@ -125,6 +126,30 @@ GameAssistant.prototype.getAndSetRandSpelling = function(oldRandArray) {
 	return randNum;
 }
 
+GameAssistant.prototype.getAndSetRandLevel = function(oldRandArray) {
+	var maxLevel = this.WordList.AllWords.length / 5;
+	var randNum = Math.floor(Math.random()*maxLevel);
+	if (oldRandArray == null) {
+		this.PassedLevels = [randNum];
+	} else {
+		//Check if the number has been used before...
+		var used = true;
+		while (used) {
+			used = false;
+			for (j = 0; j < oldRandArray.length; j++) {
+				if (randNum == oldRandArray[j]) {
+					used = true;
+					randNum = Math.floor(Math.random()*maxLevel);
+				}
+			}
+		}
+		oldRandArray.push(randNum);
+		this.PassedLevels = oldRandArray;
+	}
+	this.CurWordOffset = randNum;
+	return randNum;
+}
+
 GameAssistant.prototype.setupButtons = function(randWord, randSpelling, levelWords) {
 	// set up the button
 	this.buttonModel = {"label" : levelWords[randWord][randSpelling], "buttonClass" : "", "disabled" : false};
@@ -148,9 +173,9 @@ GameAssistant.prototype.scoreCountdown = function() {
 	var thisobj = this;
 	if (this.LevelScore > 0) {
 		this.LevelScore = this.LevelScore - 1;
-		setTimeout(function(){
-			thisobj.scoreCountdown()
-		}, 500);
+		//setTimeout(function(){
+			//thisobj.scoreCountdown()
+		//}, 500);
 	}
 	thisobj.controller.get("levelScore").update(this.LevelScore);
 }

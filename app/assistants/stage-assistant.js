@@ -20,12 +20,12 @@ StageAssistant.prototype.handleCommand = function(event) {
 		switch(event.command) {
 			case 'do-aboutNews':
 				currentScene.showAlertDialog({
-				onChoose: function(value) {},
-				title: "Speller",
-				message: "I'm not perfect, if you see an error, please let me know! Email me at jon.romanowski@gmail.com",
-				choices:[
-				{label: "OK", value:""}
-				]
+					onChoose: function(value) {},
+					title: "SpellWell",
+					message: "I'm not perfect, if you see an error, please let me know! Email me at jon.romanowski@gmail.com",
+					choices:[
+						{label: "OK", value:""}
+					]
 				});
 				break;
 		}

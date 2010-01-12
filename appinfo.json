@@ -1,10 +1,10 @@
 {
 	"id": "com.viscinc.spellwell",
-	"version": "0.9.0",
+	"version": "1.0.0",
 	"vendor": "Visc Inc",
 	"type": "web",
 	"main": "index.html",
-	"title": "Speller",
+	"title": "SpellWell",
 	"icon": "icon.png",
 	"theme": "light"
 }

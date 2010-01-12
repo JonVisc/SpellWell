@@ -1,7 +1,8 @@
-function LevelRecapAssistant(level, wordList, score) {
+function LevelRecapAssistant(level, wordList, score, passedLevels) {
 	this.Level = level;
 	this.WordList = wordList;
 	this.Score = score;
+	this.PassedLevels;
 }
 
 LevelRecapAssistant.prototype.setup = function() {
@@ -37,5 +38,5 @@ LevelRecapAssistant.prototype.cleanup = function(event) {
 }
 
 LevelRecapAssistant.prototype.handleContinueButtonPress = function(event){
-	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, null, this.Score, 100);
+	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, null, this.Score, 100, this.PassedLevels, null);
 }

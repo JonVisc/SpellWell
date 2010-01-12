@@ -10,10 +10,6 @@
         "source": "app/assistants/Game-assistant.js"
     },
     {
-        "scenes": "Preference",
-        "source": "app/assistants/Preference-assistant.js"
-    },
-    {
         "scenes": "About",
         "source": "app/assistants/About-assistant.js"
     },
