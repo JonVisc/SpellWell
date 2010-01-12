@@ -126,14 +126,10 @@ var Words = Class.create
 	],
 	// initialize - Assign default data to the feedlist
 	initialize: function() {
-		this.getAllWords();
-	},
-	// returns the list as an array
-	getAllWords: function() {
 		var returnList = [];
 		for (var i=0; i<this.AllWords.length; i++) {
 			returnList[i] = this.AllWords[i];
 		}
 		return returnList;
-	}	
+	}
 });

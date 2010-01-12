@@ -1,1 +1,18 @@
 /* Put Application specific CSS here. */
+
+#levelCompleted {
+	font-size: 24px;
+	color: red;
+}
+
+#scoreSpan {
+	font-size:36px;
+	color:blue;
+}
+
+.centerText {
+	text-align:center;
+	
+}
+
+

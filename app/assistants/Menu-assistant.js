@@ -9,18 +9,15 @@ MenuAssistant.prototype.setup = function() {
 
 	this.buttonModel = {"label" : "Begin", "buttonClass" : "secondary", "disabled" : false};
 	this.continueModel = {"label" : "Continue", "buttonClass" : "affirmative", "disabled" : false};
-	this.prefButtonModel = {"label" : "Preferences", "buttonClass" : "", "disabled" : false};
 	this.aboutButtonModel = {"label" : "How to play","buttonClass" : "", "disabled" : false};
 
 	// set up the buttons
 	this.controller.setupWidget("startButton", this.buttonAttributes, this.buttonModel);
 	this.controller.setupWidget("continueButton", this.buttonAttributes, this.continueModel);
-	this.controller.setupWidget("prefButton", this.buttonAttributes, this.prefButtonModel);
 	this.controller.setupWidget("aboutButton", this.buttonAttributes, this.aboutButtonModel);
 	// bind the button to its handler
 	Mojo.Event.listen(this.controller.get("startButton"), Mojo.Event.tap, this.handleButtonPress.bind(this));
 	Mojo.Event.listen(this.controller.get("continueButton"), Mojo.Event.tap, this.handleContinueButtonPress.bind(this));
-	Mojo.Event.listen(this.controller.get("prefButton"), Mojo.Event.tap, this.handlePrefButtonPress.bind(this));
 	Mojo.Event.listen(this.controller.get("aboutButton"), Mojo.Event.tap, this.handleAboutButtonPress.bind(this));
 }
 
