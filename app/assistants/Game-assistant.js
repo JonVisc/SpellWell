@@ -44,8 +44,16 @@ GameAssistant.prototype.deactivate = function(event) {
 }
 
 GameAssistant.prototype.cleanup = function(event) {
-	/* this function should do any cleanup needed before the scene is destroyed as 
-	   a result of being popped off the scene stack */
+	//Don't want to code the checks for which is the right and wrong button press, so a cover-all
+	Mojo.Event.stopListening(this.controller.get("Spelling1"), Mojo.Event.tap, this.handleRightButtonPress.bind(this));
+	Mojo.Event.stopListening(this.controller.get("Spelling2"), Mojo.Event.tap, this.handleRightButtonPress.bind(this));
+	Mojo.Event.stopListening(this.controller.get("Spelling3"), Mojo.Event.tap, this.handleRightButtonPress.bind(this));
+	Mojo.Event.stopListening(this.controller.get("Spelling4"), Mojo.Event.tap, this.handleRightButtonPress.bind(this));
+	
+	Mojo.Event.stopListening(this.controller.get("Spelling1"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
+	Mojo.Event.stopListening(this.controller.get("Spelling2"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
+	Mojo.Event.stopListening(this.controller.get("Spelling3"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
+	Mojo.Event.stopListening(this.controller.get("Spelling4"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
 }
 
 GameAssistant.prototype.handleRightButtonPress = function(event){
@@ -79,7 +87,7 @@ GameAssistant.prototype.getLevelWords = function() {
 	} else {
 		randLevel = this.CurWordOffset;
 	}
-	var startingPoint = 5 * (randLevel - 1);
+	var startingPoint = 5 * randLevel;
 	//Return a 2D array that contains the words for the current level.
 	return [this.WordList.AllWords[startingPoint], this.WordList.AllWords[startingPoint + 1], this.WordList.AllWords[startingPoint + 2], this.WordList.AllWords[startingPoint + 3], this.WordList.AllWords[startingPoint + 4]];
 }
@@ -173,9 +181,9 @@ GameAssistant.prototype.scoreCountdown = function() {
 	var thisobj = this;
 	if (this.LevelScore > 0) {
 		this.LevelScore = this.LevelScore - 1;
-		//setTimeout(function(){
-			//thisobj.scoreCountdown()
-		//}, 500);
+		setTimeout(function(){
+			thisobj.scoreCountdown()
+		}, 500);
 	}
 	thisobj.controller.get("levelScore").update(this.LevelScore);
 }

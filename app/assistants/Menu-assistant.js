@@ -19,6 +19,11 @@ MenuAssistant.prototype.setup = function() {
 	Mojo.Event.listen(this.controller.get("startButton"), Mojo.Event.tap, this.handleButtonPress.bind(this));
 	Mojo.Event.listen(this.controller.get("continueButton"), Mojo.Event.tap, this.handleContinueButtonPress.bind(this));
 	Mojo.Event.listen(this.controller.get("aboutButton"), Mojo.Event.tap, this.handleAboutButtonPress.bind(this));
+	
+	AdMob.ad.initialize({
+	    pub_id: 'a14b4d22abae126', // your publisher id
+	    test_mode: false,
+	});
 }
 
 MenuAssistant.prototype.activate = function(event) {
@@ -38,7 +43,7 @@ MenuAssistant.prototype.handleContinueButtonPress = function(event) {
 	var CookieInfo = new Mojo.Model.Cookie("Speller");
 	var levelInfo = CookieInfo.get();
 	
-	this.controller.stageController.pushScene("Game", levelInfo != null ? levelInfo.Level : 1, this.WordList, null, null, levelInfo != null ? levelInfo.Score : 0, 100, levelInfo.PassedLevels);
+	this.controller.stageController.pushScene("Game", levelInfo != null ? levelInfo.Level : 25, this.WordList, null, null, levelInfo != null ? levelInfo.Score : 0, 100, levelInfo != null ? levelInfo.PassedLevels : null);
 }
 MenuAssistant.prototype.handleButtonPress = function(event){
 	this.controller.stageController.pushScene("Game", 1, this.WordList, null, null, 0, 100, null);

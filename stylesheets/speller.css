@@ -1,4 +1,8 @@
 /* Put Application specific CSS here. */
+td, th {
+	color:black;
+	text-align:center;
+}
 
 #levelCompleted {
 	font-size: 24px;
@@ -8,6 +12,15 @@
 #scoreSpan {
 	font-size:36px;
 	color:blue;
+}
+
+#scoresList {
+	margin: auto;
+}
+
+#scoresTable {
+	margin: auto;
+	color:gray;
 }
 
 .centerText {

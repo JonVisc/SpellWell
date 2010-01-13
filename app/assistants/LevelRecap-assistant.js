@@ -2,7 +2,7 @@ function LevelRecapAssistant(level, wordList, score, passedLevels) {
 	this.Level = level;
 	this.WordList = wordList;
 	this.Score = score;
-	this.PassedLevels;
+	this.PassedLevels = passedLevels;
 }
 
 LevelRecapAssistant.prototype.setup = function() {
@@ -10,7 +10,8 @@ LevelRecapAssistant.prototype.setup = function() {
 	CookieInfo.remove();
 	CookieInfo.put({
 		Level: this.Level,
-		Score: this.Score
+		Score: this.Score,
+		PassedLevels: this.PassedLevels
 	});
 	
 	this.controller.get("levelCompleted").update(this.Level - 1);
@@ -20,6 +21,24 @@ LevelRecapAssistant.prototype.setup = function() {
 	this.buttonAttributes = {};
 	this.controller.setupWidget("continueButton", this.buttonAttributes, this.buttonModel);
 	Mojo.Event.listen(this.controller.get("continueButton"), Mojo.Event.tap, this.handleContinueButtonPress.bind(this));
+	
+	this.TipList = new Tips();
+	this.controller.get("tipText").update(this.getRandTip());	
+	
+	AdMob.ad.request({
+        onSuccess: (function (ad) { // successful ad call, parameter 'ad' is the html markup for the ad
+                this.controller.get("admob_ad").insert(ad); // place mark up in the the previously declared div
+        }).bind(this),
+        onFailure: (function () { // no ad was returned or call was unsuccessful
+                // do nothing? 
+        }).bind(this),
+    });
+}
+
+LevelRecapAssistant.prototype.getRandTip = function() {
+	var maxLevel = this.TipList.AllTips.length;
+	var randNum = Math.floor(Math.random()*maxLevel);
+	return this.TipList.AllTips[randNum];
 }
 
 LevelRecapAssistant.prototype.activate = function(event) {
@@ -33,8 +52,7 @@ LevelRecapAssistant.prototype.deactivate = function(event) {
 }
 
 LevelRecapAssistant.prototype.cleanup = function(event) {
-	/* this function should do any cleanup needed before the scene is destroyed as 
-	   a result of being popped off the scene stack */
+	Mojo.Event.listen(this.controller.get("continueButton"), Mojo.Event.tap, this.handleContinueButtonPress.bind(this));
 }
 
 LevelRecapAssistant.prototype.handleContinueButtonPress = function(event){

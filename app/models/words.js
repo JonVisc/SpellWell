@@ -1,6 +1,6 @@
 var Words = Class.create
- ({
- 	AllWords:
+({
+	AllWords:
 	[
 		//1
 		["Accident", "Accidint", "Acident", "Acciedent"],
@@ -122,6 +122,36 @@ var Words = Class.create
 		["Necessary", "Necessery", "Necesary", "Neccessary"],
 		["Opportunity", "Opportunty", "Opporutnity", "Oportunity"],
 		["Vengeance", "Vengaence", "Vengence", "Vengance"],
+		//21
+		["Harass", "Haras", "Harrass", "Harras"],
+		["Achievement", "Achievment", "Acheivement", "Acheivment"],
+		["Beginning", "Begining", "Beginneng", "Beganning"],
+		["Defendant", "Defendent", "Defandant", "Defandent"],
+		["Incidentally", "Incadientally", "Incedintally", "Incidentaly"],
+		//22
+		["Ninety", "Ninty", "Ninity", "Ninetty"],
+		["Permissible", "Permissable", "Permessible", "Permisible"],
+		["Disappoint", "Dissappoint", "Disapoint", "Dissapoint"],
+		["Repetition", "Repetetion", "Repitetion", "Repettition"],
+		["Shining", "Shineing", "Shiening", "Shineng"],
+		//23
+		["Prominent", "Prominient", "Promineint", "Promenint"],
+		["Suppress", "Supress", "Suppres", "Supres"],
+		["Tomorrow", "Tommorrow", "Tomorow", "Tommorow"],
+		["Unforgettable", "Unforgetable", "Unforgetteble", "Unforgitable"],
+		["Vigilant", "Vigalant", "Vigilent", "Vigilint"],
+		//24
+		["Transferring", "Transfering", "Transffering", "Tranffering"],
+		["Pursue", "Persue", "Puresue", "Perseu"],
+		["Acknowledgment", "Acknowledgement", "Acknoledgment", "Acknowlegdment"],
+		["Deductible", "Deductable", "Dedectuble", "Deductuble"],
+		["Inadvertent", "Inadvertant", "Inadvartent", "Inadvartant"],
+		//25
+		["Susceptible", "Susciptible", "Susceptable", "Susseptible"],
+		["Prerogative", "Perogative", "Perogitive", "Prerogitive"],
+		["Withhold", "Withold", "Withuld", "Withhald"],
+		["Aficionado", "Afiscionado", "Afiseonado", "Aficoinado"],
+		["Broccoli", "Broccolli", "Brocoli", "Brocolli"],
 		//["", "", "", ""],
 	],
 	// initialize - Assign default data to the feedlist

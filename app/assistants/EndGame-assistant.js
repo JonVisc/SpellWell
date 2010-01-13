@@ -27,17 +27,17 @@ EndGameAssistant.prototype.setup = function() {
 		Scores: scores
 	});
 	
-	var scoreText = "";
-	if (scores.length < 10) {
+	var scoreText = "<table id=\"scoresTable\" border=\"2\"><thead><tr><th>Score</th><th>Time</th></tr></thead><tbody>";
+	if (scores.length < 8) {
 		for (i = 0; i < scores.length; i++)
 		{
-			scoreText += scores[i][1] + " - " + scores[i][0] + "<br/>";
+			scoreText += "<tr><td>" + scores[i][1] + "</td><td>" + scores[i][0] + "</td></tr>";
 		}
 	} else {
 		var newScores = new Array();
-		for (i = 0; i < 10; i++)
+		for (i = 0; i < 8; i++)
 		{
-			scoreText += scores[i][1] + " - " + scores[i][0] + "<br/>";
+			scoreText += "<tr><td>" + scores[i][1] + "</td><td>" + scores[i][0] + "</td></tr>";
 			newScores.push(scores[i]);
 		}
 		//If there are more than ten, keeps the cookie from growing too large over
@@ -47,6 +47,7 @@ EndGameAssistant.prototype.setup = function() {
 			Scores: newScores
 		});
 	}
+	scoreText += "</tbody></table>";
 	
 	this.controller.get("scoresList").update(scoreText);
 	this.controller.get("scoreSpan").update(this.Score);

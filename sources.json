@@ -1,6 +1,8 @@
 [
     {"source": "app/assistants/stage-assistant.js"},
+    {"source": "app/utils/admob.js"},
     {"source": "app/models/words.js"},
+    {"source": "app/models/tips.js"},
     {
         "scenes": "Menu",
         "source": "app/assistants/Menu-assistant.js"
