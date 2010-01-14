@@ -7,6 +7,9 @@ function EndGameAssistant(score) {
 }
 
 EndGameAssistant.prototype.setup = function() {
+	// Setup Application Menu
+	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
+	
 	//Remove th continue cookie
 	var CookieInfo = new Mojo.Model.Cookie("Speller");
 	CookieInfo.remove();

@@ -12,6 +12,9 @@ function GameAssistant(level, wordList, randWordArray, choice, score, levelScore
 }
 
 GameAssistant.prototype.setup = function() {
+	// Setup Application Menu
+	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
+	
 	var levelWords = this.getLevelWords();
 	
 	if (this.Level == 1) {

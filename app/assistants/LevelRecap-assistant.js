@@ -6,6 +6,9 @@ function LevelRecapAssistant(level, wordList, score, passedLevels) {
 }
 
 LevelRecapAssistant.prototype.setup = function() {
+	// Setup Application Menu
+	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
+	
 	var CookieInfo = new Mojo.Model.Cookie("Speller");
 	CookieInfo.remove();
 	CookieInfo.put({

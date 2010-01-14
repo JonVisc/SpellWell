@@ -4,9 +4,9 @@ function MenuAssistant(wordList) {
 
 MenuAssistant.prototype.setup = function() {
 	// Setup Application Menu
-	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);	
+	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
+		
 	this.buttonAttributes = {};
-
 	this.buttonModel = {"label" : "Begin", "buttonClass" : "secondary", "disabled" : false};
 	this.continueModel = {"label" : "Continue", "buttonClass" : "affirmative", "disabled" : false};
 	this.aboutButtonModel = {"label" : "How to play","buttonClass" : "", "disabled" : false};

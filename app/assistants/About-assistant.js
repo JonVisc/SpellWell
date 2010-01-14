@@ -6,13 +6,8 @@ function AboutAssistant() {
 }
 
 AboutAssistant.prototype.setup = function() {
-	/* this function is for setup tasks that have to happen when the scene is first created */
-		
-	/* use Mojo.View.render to render view templates and add them to the scene, if needed. */
-	
-	/* setup widgets here */
-	
-	/* add event handlers to listen to events from widgets */
+	// Setup Application Menu
+	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
 }
 
 AboutAssistant.prototype.activate = function(event) {
