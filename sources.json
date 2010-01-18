@@ -22,5 +22,8 @@
     {
         "scenes": "LevelRecap",
         "source": "app/assistants/LevelRecap-assistant.js"
+    },
+	{
+        "source": "app/assistants/Name-assistant.js"
     }
 ]

@@ -1,5 +1,5 @@
 <div id="main" class="palm-hasheader">
-	<div id="header" class="palm-header">Congratulations!</div>
+	<div class="palm-header">Congratulations!</div>
     <div class="palm-body-text centerText"  x-mojo-loc="">
 			Your end score is<br/>
 			<span id="scoreSpan">0</span>

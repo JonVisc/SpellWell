@@ -59,5 +59,5 @@ LevelRecapAssistant.prototype.cleanup = function(event) {
 }
 
 LevelRecapAssistant.prototype.handleContinueButtonPress = function(event){
-	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, null, this.Score, 100, this.PassedLevels, null);
+	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, null, this.Score, 1, this.PassedLevels, null);
 }

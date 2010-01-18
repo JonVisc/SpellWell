@@ -3,11 +3,11 @@ var Words = Class.create
 	AllWords:
 	[
 		//1
-		["Accident", "Accidint", "Acident", "Acciedent"],
-		["Believe", "Beleive", "Bilive", "Bileive"],
+		["accident", "Accidint", "Acident", "Acciedent"],
+		["believe", "Beleive", "Bilive", "Bileive"],
 		["Definitely", "Definately", "Defiantly", "Definetely"],
 		["Experience", "Expereince", "Expirience", "Experince"],
-		["Immediately", "Immedaitely", "Immidiately", "Immidietely"],
+		["Immediately", "Immedaitely", "Immidiately", "Immidietely"]/*,
 		//2
 		["Collectible", "Colectible", "Collectable", "Collecteble"],
 		["Discipline", "Discepline", "Disciplane", "Discapline"],
@@ -152,7 +152,15 @@ var Words = Class.create
 		["Withhold", "Withold", "Withuld", "Withhald"],
 		["Aficionado", "Afiscionado", "Afiseonado", "Aficoinado"],
 		["Broccoli", "Broccolli", "Brocoli", "Brocolli"],
-		//["", "", "", ""],
+		//26
+		//["disobedient", "", "", ""],
+		//["condolences", "", "", ""],
+		//["Ouija", "", "", ""],
+		//["amateur", "", "", ""],
+		//["committed", "", "", ""],
+		//27
+		//["publicly", "", "", ""],
+		*/
 	],
 	// initialize - Assign default data to the feedlist
 	initialize: function() {

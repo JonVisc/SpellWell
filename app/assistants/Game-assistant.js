@@ -15,27 +15,38 @@ GameAssistant.prototype.setup = function() {
 	// Setup Application Menu
 	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
 	
-	var levelWords = this.getLevelWords();
-	
+	this.updateHeader();
+	this.setupProgressBar();
+	this.choseWordAndSetupButtons();
+	this.checkCookie();
+}
+
+//If there is a cookie and this is the first level, remove it.
+GameAssistant.prototype.checkCookie = function(){
 	if (this.Level == 1) {
 		var CookieInfo = new Mojo.Model.Cookie("Speller");
 		CookieInfo.remove();
 	}
-	
+}
+
+//Update the header
+GameAssistant.prototype.updateHeader = function() {
 	if (this.Choice != null) {
 		this.controller.get("choiceHeader").update(this.Choice);
 	}
 	else {
 		this.controller.get("choiceHeader").update("Level " + this.Level);
 	}
-	
+}
+
+GameAssistant.prototype.choseWordAndSetupButtons = function() {
+	// Get the 5 words for the current level
+	var levelWords = this.getLevelWords();	
 	var randWord = this.getAndSetRandWord(this.RandWordArray);
 	while (this.ButtonNum < 5) {
 		this.setupButtons(randWord, this.getAndSetRandSpelling(this.RandSpellingArray), levelWords);
 	}
-	this.scoreCountdown();
 }
-
 GameAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
 	   example, key handlers that are observing the document */
@@ -57,6 +68,8 @@ GameAssistant.prototype.cleanup = function(event) {
 	Mojo.Event.stopListening(this.controller.get("Spelling2"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
 	Mojo.Event.stopListening(this.controller.get("Spelling3"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
 	Mojo.Event.stopListening(this.controller.get("Spelling4"), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
+	
+	window.clearInterval(this.updater);
 }
 
 GameAssistant.prototype.handleRightButtonPress = function(event){
@@ -67,17 +80,17 @@ GameAssistant.prototype.handleRightButtonPress = function(event){
 	else {
 		var startingPoint = 5 * (this.Level);
 		if (this.WordList.AllWords.length - 1 < (startingPoint + 4)) {
-			this.controller.stageController.swapScene("EndGame", this.Score + this.LevelScore);
+			this.controller.stageController.swapScene("EndGame", this.Score + Math.round(this.LevelScore * 100));
 		}
 		else {
-			this.controller.stageController.swapScene("LevelRecap", this.Level + 1, this.WordList, this.Score + this.LevelScore, this.PassedLevels);
+			this.controller.stageController.swapScene("LevelRecap", this.Level + 1, this.WordList, this.Score + Math.round(this.LevelScore * 100), this.PassedLevels);
 		}
 	}
 }
 
 GameAssistant.prototype.handleWrongButtonPress = function(event){
-	var subScore = this.LevelScore - 5;
-	if (this.LevelScore < 5) {
+	var subScore = this.LevelScore - .05;
+	if (this.LevelScore < .05) {
 		subScore = 0;
 	}
 	this.controller.stageController.swapScene("Game", this.Level, this.WordList, null, "Wrong!", this.Score, subScore, this.PassedLevels, this.CurWordOffset);
@@ -175,18 +188,32 @@ GameAssistant.prototype.setupButtons = function(randWord, randSpelling, levelWor
 	else {
 		Mojo.Event.listen(this.controller.get("Spelling" + this.ButtonNum), Mojo.Event.tap, this.handleWrongButtonPress.bind(this));
 	}
-	
 	this.ButtonNum++;
 }
 
-GameAssistant.prototype.scoreCountdown = function() {
-	//dunno why i have to get it to an object instead of use this. but whatever
-	var thisobj = this;
-	if (this.LevelScore > 0) {
-		this.LevelScore = this.LevelScore - 1;
-		setTimeout(function(){
-			thisobj.scoreCountdown()
-		}, 500);
+GameAssistant.prototype.setupProgressBar = function() {
+	this.attr = {
+		title: '',
+		image: ''
+	};
+	this.model = {
+		value: this.LevelScore,
+		disabled : false
+	};
+	this.controller.setupWidget('progressBar', this.attr, this.model);
+	//setup a window timeout with an interval
+	this.updater = window.setInterval(this.updateProgress.bind(this), 500);
+}	
+
+GameAssistant.prototype.updateProgress = function(){
+	this.controller.get("levelScore").update(Math.round(this.LevelScore * 100));
+	if (this.LevelScore <= 0) {
+		window.clearInterval(this.updater);
 	}
-	thisobj.controller.get("levelScore").update(this.LevelScore);
+	else {
+		this.model.value = this.LevelScore;
+		this.controller.modelChanged(this.model);
+		this.LevelScore -= .01;
+	}
 }
+

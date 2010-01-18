@@ -10,9 +10,15 @@ EndGameAssistant.prototype.setup = function() {
 	// Setup Application Menu
 	this.controller.setupWidget(Mojo.Menu.appMenu, newsMenuAttr, newsMenuModel);
 	
-	//Remove th continue cookie
+	//Remove the continue cookie
 	var CookieInfo = new Mojo.Model.Cookie("Speller");
 	CookieInfo.remove();
+	
+	this.controller.showDialog({
+		template: 'EndGame/Name-scene',
+		assistant: new NameAssistant(this, this.callback.bind(this)),
+		preventCancel: true
+	});
 	
 	var ScoresCookie = new Mojo.Model.Cookie("Save");
 	var scoresOverall = ScoresCookie.get();
@@ -73,5 +79,11 @@ EndGameAssistant.prototype.cleanup = function(event) {
 
 EndGameAssistant.prototype.getCleanDateTime = function() {
 	var date = new Date();
-	return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+	return date.toDateString() + " " + date.toLocaleTimeString();
 }
+
+EndGameAssistant.prototype.callback = function(value) {
+	
+	this.controller.get("header").update("Congratulations " + value + "!");
+}
+
