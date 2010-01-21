@@ -20,45 +20,7 @@ EndGameAssistant.prototype.setup = function() {
 		preventCancel: true
 	});
 	
-	var ScoresCookie = new Mojo.Model.Cookie("Save");
-	var scoresOverall = ScoresCookie.get();
-	ScoresCookie.remove();
-	var scores;
-	if (scoresOverall == null) {
-		scores = new Array();
-	} else{
-		scores = scoresOverall.Scores;
-	}
-	var date = this.getCleanDateTime();
-	scores.unshift([date, this.Score]);
 	
-	ScoresCookie.put({
-		Scores: scores
-	});
-	
-	var scoreText = "<table id=\"scoresTable\" border=\"2\"><thead><tr><th>Score</th><th>Time</th></tr></thead><tbody>";
-	if (scores.length < 8) {
-		for (i = 0; i < scores.length; i++)
-		{
-			scoreText += "<tr><td>" + scores[i][1] + "</td><td>" + scores[i][0] + "</td></tr>";
-		}
-	} else {
-		var newScores = new Array();
-		for (i = 0; i < 8; i++)
-		{
-			scoreText += "<tr><td>" + scores[i][1] + "</td><td>" + scores[i][0] + "</td></tr>";
-			newScores.push(scores[i]);
-		}
-		//If there are more than ten, keeps the cookie from growing too large over
-		//a long period of time
-		ScoresCookie.remove();
-		ScoresCookie.put({
-			Scores: newScores
-		});
-	}
-	scoreText += "</tbody></table>";
-	
-	this.controller.get("scoresList").update(scoreText);
 	this.controller.get("scoreSpan").update(this.Score);
 }
 
@@ -82,8 +44,52 @@ EndGameAssistant.prototype.getCleanDateTime = function() {
 	return date.toDateString() + " " + date.toLocaleTimeString();
 }
 
-EndGameAssistant.prototype.callback = function(value) {
+EndGameAssistant.prototype.callback = function(name) {
 	
-	this.controller.get("header").update("Congratulations " + value + "!");
+	var ScoresCookie = new Mojo.Model.Cookie("Save");
+	var scoresOverall = ScoresCookie.get();
+	ScoresCookie.remove();
+	var scores;
+	if (scoresOverall == null) {
+		scores = new Array();
+	} else{
+		scores = scoresOverall.Scores;
+	}
+	var date = this.getCleanDateTime();
+	scores.unshift([date, this.Score, name]);
+	
+	ScoresCookie.put({
+		Scores: scores
+	});
+	
+	this.scoreText = "<table id=\"scoresTable\"><thead><tr><th>Name</th><th>Score</th></tr></thead><tbody>";
+	if (scores.length < 6) {
+		for (i = 0; i < scores.length; i++)
+		{
+			var uname = scores[i][2] == undefined ? "SpellWeller" : scores[i][2];
+			this.scoreText += "<tr><td>" + uname + "</td><td>" + scores[i][1] + "</td></tr>";
+		}
+	} else {
+		var newScores = new Array();
+		for (i = 0; i < 6; i++)
+		{
+			var uname = scores[i][2] == undefined ? "SpellWeller" : scores[i][2];
+			this.scoreText += "<tr><td>" + uname + "</td><td>" + scores[i][1] + "</td></tr>";
+			newScores.push(scores[i]);
+		}
+		//If there are more than ten, keeps the cookie from growing too large over
+		//a long period of time
+		ScoresCookie.remove();
+		ScoresCookie.put({
+			Scores: newScores
+		});
+	}
+	this.scoreText += "</tbody></table>";
+	
+	this.controller.get("scoresList").update(this.scoreText);
+	
+	this.controller.get("header").update("Congratulations " + name + "!");
+	
+	
 }
 

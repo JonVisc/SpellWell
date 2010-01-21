@@ -7,7 +7,7 @@ var Words = Class.create
 		["believe", "Beleive", "Bilive", "Bileive"],
 		["Definitely", "Definately", "Defiantly", "Definetely"],
 		["Experience", "Expereince", "Expirience", "Experince"],
-		["Immediately", "Immedaitely", "Immidiately", "Immidietely"]/*,
+		["Immediately", "Immedaitely", "Immidiately", "Immidietely"],
 		//2
 		["Collectible", "Colectible", "Collectable", "Collecteble"],
 		["Discipline", "Discepline", "Disciplane", "Discapline"],
@@ -111,7 +111,7 @@ var Words = Class.create
 		["Controversial", "Controversail", "Controversal", "Contriversal"],
 		["Encouragement", "Encuoragement", "Encouragment", "Encouragament"],
 		//19
-		["Handkerchief", "Hankerchief", "Handkercheif", "Hankerchief"],
+		["Handkerchief", "Hankerchief", "Handkercheif", "Hankercheif"],
 		["Simultaneous", "Simulteneous", "Simultanaous", "Simultenaous"],
 		["Wednesday", "Wendnesday", "Wendesday", "Wednsday"],
 		["Tendency", "Tendancy", "Tendecny", "Tandency"],
@@ -151,7 +151,7 @@ var Words = Class.create
 		["Prerogative", "Perogative", "Perogitive", "Prerogitive"],
 		["Withhold", "Withold", "Withuld", "Withhald"],
 		["Aficionado", "Afiscionado", "Afiseonado", "Aficoinado"],
-		["Broccoli", "Broccolli", "Brocoli", "Brocolli"],
+		["Broccoli", "Broccolli", "Brocoli", "Brocolli"]/*,
 		//26
 		//["disobedient", "", "", ""],
 		//["condolences", "", "", ""],
